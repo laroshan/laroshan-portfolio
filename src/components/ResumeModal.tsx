@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { X, Copy, Check, Printer, FileText } from 'lucide-react';
-import { personalInfo, experiences, educationList } from '../data/portfolioData';
+import { personalInfo, experiences, educationList, certificationsAndHonors } from '../data/portfolioData';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -29,9 +29,10 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
   const handleCopyText = () => {
     const text = `
 LAROSHAN SURENDRAN
-Senior Software Engineer
+Senior Software Engineer | Full-Stack & Cloud Architecture
 Email: ${personalInfo.email} | Phone: ${personalInfo.phone} | Location: ${personalInfo.location}
 LinkedIn: ${personalInfo.linkedin} | GitHub: ${personalInfo.github} | Portfolio: ${personalInfo.portfolio}
+Work Authorization: Sri Lankan Citizen | Eligible for EU Blue Card (Germany/EU) | Open to Immediate Relocation
 
 PROFESSIONAL SUMMARY
 ${personalInfo.bio}
@@ -44,16 +45,19 @@ ${e.highlights.map(h => `- ${h}`).join('\n')}
 Tech Stack: ${e.technologies.join(', ')}
 `).join('\n')}
 
-EDUCATION
+EDUCATION & QUALIFICATIONS
 ${educationList.map(edu => `
 ${edu.degree} - ${edu.institution} (${edu.period})
 ${edu.grade}
 `).join('\n')}
 
+HONORS & CERTIFICATIONS
+${certificationsAndHonors.map(c => `- ${c.title} | ${c.issuer} (${c.date}): ${c.description}`).join('\n')}
+
 LANGUAGES
 - English: Fluent (C1)
-- German: A2 Completed, B1 in progress
-- Tamil & Sinhala: Native
+- German: Goethe-Zertifikat B1
+- Sinhala & Tamil: Native
     `.trim();
 
     navigator.clipboard.writeText(text);
@@ -157,12 +161,12 @@ LANGUAGES
               <span className="accent-slash">/</span> Core Technical Capabilities
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
-              <div><strong className="text-white">Languages:</strong> Java (11/17/21), Python, TypeScript, JavaScript, SQL</div>
-              <div><strong className="text-white">Backend:</strong> Spring Boot 3, Microservices, Node.js, FastAPI, RESTful APIs</div>
-              <div><strong className="text-white">Cloud & DevOps:</strong> AWS (ECS, Lambda, RDS, S3), Docker, Kubernetes, CI/CD</div>
-              <div><strong className="text-white">Data & AI:</strong> Apache Airflow, Kafka, PySpark, Anomaly Detection, NLP</div>
-              <div><strong className="text-white">Databases:</strong> PostgreSQL, MongoDB, Redis, MySQL</div>
-              <div><strong className="text-white">Quality:</strong> JUnit, Mockito, SonarQube, Checkmarx, Snyk, TDD</div>
+              <div><strong className="text-white">Languages:</strong> Java (11/17/21), Python, TypeScript, JavaScript, SQL, Go</div>
+              <div><strong className="text-white">Backend:</strong> Spring Boot 3, Apache Kafka, Microservices, FastAPI, Node.js</div>
+              <div><strong className="text-white">Cloud & DevOps:</strong> AWS (ECS, Batch, S3, RDS, CloudWatch), Docker, Kubernetes, CI/CD</div>
+              <div><strong className="text-white">Data & AI/ML:</strong> Computer Vision (YOLO), SageMaker, PySpark, Airflow, PyTorch</div>
+              <div><strong className="text-white">Databases:</strong> PostgreSQL, MongoDB, Redis Caching, MySQL</div>
+              <div><strong className="text-white">Quality:</strong> TDD, JUnit, Mockito, SonarQube, Checkmarx, Snyk, Agile/Scrum</div>
             </div>
           </div>
 
@@ -211,6 +215,35 @@ LANGUAGES
                 <div className="text-emerald-400 font-semibold">{edu.grade}</div>
               </div>
             ))}
+          </div>
+
+          {/* Honors & Certifications */}
+          <div>
+            <h2 className="subtitle-tag text-xs mb-2">
+              <span className="accent-slash">/</span> Honors & Certifications
+            </h2>
+            <div className="space-y-2">
+              {certificationsAndHonors.map((c) => (
+                <div key={c.id} className="text-xs">
+                  <div className="flex justify-between font-bold text-white">
+                    <span>{c.title} — <span className="text-accent-cyan">{c.issuer}</span></span>
+                    <span className="text-neutral-400">{c.date}</span>
+                  </div>
+                  <p className="text-neutral-400 mt-0.5">{c.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Languages & Work Authorization */}
+          <div>
+            <h2 className="subtitle-tag text-xs mb-2">
+              <span className="accent-slash">/</span> Languages & Work Authorization
+            </h2>
+            <div className="text-xs space-y-1 text-neutral-300">
+              <div><strong className="text-white">Languages:</strong> English (C1 Fluent), German (Goethe-Zertifikat B1), Sinhala & Tamil (Native)</div>
+              <div><strong className="text-white">Work Authorization:</strong> Sri Lankan Citizen | Eligible for EU Blue Card (Germany / EU) | Open to Immediate Relocation</div>
+            </div>
           </div>
 
         </div>

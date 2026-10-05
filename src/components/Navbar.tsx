@@ -23,6 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
     { name: 'Experience', href: '#experience' },
     { name: 'Portfolio', href: '#portfolio' },
     { name: 'Skills', href: '#skills' },
+    { name: 'Credentials', href: '#education' },
     { name: 'Contact', href: '#contact' },
   ];
 

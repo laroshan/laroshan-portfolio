@@ -62,6 +62,17 @@ export interface LanguageSkill {
   badge: string;
 }
 
+export interface CertificationOrHonor {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  description: string;
+  badge?: string;
+  icon?: string;
+  credentialUrl?: string;
+}
+
 export interface ImpactStat {
   value: string;
   label: string;
