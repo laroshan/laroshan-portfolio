@@ -141,7 +141,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
         {/* Modal Footer Actions */}
         <div className="p-6 border-t border-[#232d42] bg-[#0f141f] flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            {project.sourceNote && (
+              <span className="text-xs text-neutral-400 max-w-sm">
+                {project.sourceNote}
+              </span>
+            )}
             {project.githubUrl && (
               <a
                 href={project.githubUrl}

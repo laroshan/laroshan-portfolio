@@ -24,6 +24,7 @@ export interface Project {
   featured: boolean;
   githubUrl?: string;
   liveUrl?: string;
+  sourceNote?: string;
   demoBadge?: string;
   metrics?: {
     label: string;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, Copy, Check, Printer, FileText } from 'lucide-react';
+import { X, Copy, Check, Printer, FileText, Download } from 'lucide-react';
 import { personalInfo, experiences, educationList, certificationsAndHonors } from '../data/portfolioData';
 
 interface ResumeModalProps {
@@ -32,7 +32,7 @@ LAROSHAN SURENDRAN
 Senior Software Engineer | Full-Stack & Cloud Architecture
 Email: ${personalInfo.email} | Phone: ${personalInfo.phone} | Location: ${personalInfo.location}
 LinkedIn: ${personalInfo.linkedin} | GitHub: ${personalInfo.github} | Portfolio: ${personalInfo.portfolio}
-Work Authorization: Sri Lankan Citizen | Eligible for EU Blue Card (Germany/EU) | Open to Immediate Relocation
+Work Authorization: ${personalInfo.lookingFor.workAuthorization} | Open to relocation
 
 PROFESSIONAL SUMMARY
 ${personalInfo.bio}
@@ -70,7 +70,7 @@ LANGUAGES
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div id="resume-modal" role="dialog" aria-modal="true" aria-label="Resume" className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
       <div 
         className="fixed inset-0" 
         onClick={onClose} 
@@ -80,7 +80,7 @@ LANGUAGES
       <div className="relative w-full max-w-4xl bg-[#131926] border border-[#232d42] rounded-3xl shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col">
         
         {/* Modal Top Bar */}
-        <div className="p-6 border-b border-[#232d42] bg-[#0f141f] flex items-center justify-between">
+        <div className="no-print p-6 border-b border-[#232d42] bg-[#0f141f] flex flex-wrap gap-3 items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-accent-blue/15 border border-accent-blue/30 flex items-center justify-center text-accent-cyan">
               <FileText className="w-5 h-5" />
@@ -95,7 +95,16 @@ LANGUAGES
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              href={personalInfo.cvUrl}
+              download="Laroshan_Surendran_CV.pdf"
+              className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-full bg-accent-blue hover:bg-blue-600 text-white transition-colors"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download PDF</span>
+            </a>
+
             <button
               onClick={handleCopyText}
               className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-full bg-[#1a2233] hover:bg-[#232d42] text-neutral-200 border border-[#232d42] transition-colors"
@@ -106,10 +115,10 @@ LANGUAGES
 
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-full bg-accent-blue hover:bg-blue-600 text-white transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-full bg-[#1a2233] hover:bg-[#232d42] text-neutral-200 border border-[#232d42] transition-colors"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print / PDF</span>
+              <span>Print</span>
             </button>
 
             <button
@@ -123,7 +132,7 @@ LANGUAGES
         </div>
 
         {/* Resume Content View */}
-        <div className="p-8 sm:p-10 overflow-y-auto space-y-6 text-neutral-300 text-sm leading-relaxed bg-[#0b0e14] custom-scrollbar">
+        <div id="resume-print" className="p-8 sm:p-10 overflow-y-auto space-y-6 text-neutral-300 text-sm leading-relaxed bg-[#0b0e14] custom-scrollbar">
           
           {/* Header */}
           <div className="border-b border-[#232d42] pb-6 text-center sm:text-left">
@@ -134,9 +143,9 @@ LANGUAGES
               Senior Software Engineer & Distributed Systems Architect
             </p>
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-xs text-neutral-400 mt-2">
-              <span>📧 {personalInfo.email}</span>
-              <span>📱 {personalInfo.phone}</span>
-              <span>📍 {personalInfo.location}</span>
+              <span>{personalInfo.email}</span>
+              <span>{personalInfo.phone}</span>
+              <span>{personalInfo.location}</span>
             </div>
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-xs text-accent-blue font-semibold mt-1">
               <span>LinkedIn: {personalInfo.linkedin}</span>
@@ -242,14 +251,14 @@ LANGUAGES
             </h2>
             <div className="text-xs space-y-1 text-neutral-300">
               <div><strong className="text-white">Languages:</strong> English (C1 Fluent), German (Goethe-Zertifikat B1), Sinhala & Tamil (Native)</div>
-              <div><strong className="text-white">Work Authorization:</strong> Sri Lankan Citizen | Eligible for EU Blue Card (Germany / EU) | Open to Immediate Relocation</div>
+              <div><strong className="text-white">Work Authorization:</strong> {personalInfo.lookingFor.workAuthorization} | Open to relocation</div>
             </div>
           </div>
 
         </div>
 
         {/* Modal Footer */}
-        <div className="p-5 border-t border-[#232d42] bg-[#0f141f] flex items-center justify-between text-xs">
+        <div className="no-print p-5 border-t border-[#232d42] bg-[#0f141f] flex items-center justify-between text-xs">
           <span className="text-neutral-400">
             Available for technical leadership & engineering roles
           </span>

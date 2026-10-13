@@ -4,8 +4,7 @@ import {
   ChevronDown, 
   Linkedin, 
   Github, 
-  Mail, 
-  Phone
+  Mail
 } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 
@@ -136,14 +135,6 @@ export const Hero: React.FC = () => {
                   aria-label="Email"
                 >
                   <Mail className="w-5 h-5" />
-                </a>
-
-                <a
-                  href={`tel:${personalInfo.phone.replace(/\s+/g, '')}`}
-                  className="w-11 h-11 rounded-xl bg-[#131926] border border-[#232d42] hover:border-emerald-400 hover:text-emerald-400 text-neutral-300 flex items-center justify-center transition-all duration-200 shadow-sm"
-                  aria-label="Phone"
-                >
-                  <Phone className="w-5 h-5" />
                 </a>
               </div>
             </div>

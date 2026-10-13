@@ -116,7 +116,7 @@ export const SkillsSection: React.FC = () => {
               <div className="pt-6 mt-6 border-t border-[#232d42]/60 flex items-center justify-between text-xs text-neutral-400">
                 <span>{category.skills.length} core technologies</span>
                 <span className="text-accent-cyan font-bold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                  Mastered &rarr;
+                  Used in production &rarr;
                 </span>
               </div>
             </div>

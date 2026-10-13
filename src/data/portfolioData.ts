@@ -6,12 +6,18 @@ export const personalInfo = {
   title: "Senior Software Engineer",
   subtitle: "Full-Stack & Cloud Architecture • Distributed Systems • AI/ML",
   location: "Colombo, Sri Lanka",
-  statusBadge: "OPEN TO GLOBAL OPPORTUNITIES // EU BLUE CARD ELIGIBLE",
+  statusBadge: "OPEN TO GLOBAL OPPORTUNITIES // RELOCATION TO GERMANY & EU",
   email: "laroshansurendran@gmail.com",
   phone: "+94 71 398 4317",
   linkedin: "https://www.linkedin.com/in/laroshan-surendran/",
   github: "https://github.com/laroshan",
   portfolio: "https://laroshan-portfolio.web.app/",
+  cvUrl: "/cv.pdf",
+  lookingFor: {
+    roles: ["Senior Software Engineer", "Senior Backend Engineer (Java / Spring Boot)", "Full-Stack Engineer", "ML / Platform Engineer"],
+    locations: ["Germany", "EU (relocation)", "Remote"],
+    workAuthorization: "Sri Lankan citizen • Visa sponsorship required (EU Blue Card pathway with a qualifying job offer)",
+  },
   bio: "Senior Software Engineer with 4+ years of experience designing and delivering resilient enterprise full-stack systems, scalable microservices, and automated data/ML pipelines across foodservice technology and global EdTech. Recognized as a Global Finalist at the Sysco Global Hackathon 2026 for \"Claim Sight\" (Vision AI). Demonstrated expertise in Java/Spring Boot, Python/FastAPI, React, AWS cloud architecture, Kafka event streaming, and production computer vision. AWS Certified AI Practitioner and Goethe-Zertifikat B1 certified.",
   shortPitch: "Architecting resilient distributed microservices, scalable event pipelines, and intelligent AI tools with 99.9% uptime for global scale.",
 };
@@ -120,6 +126,8 @@ export const projects: Project[] = [
     impact: "Recognized as a Global Finalist at Sysco Global Hackathon 2026. Automated 500+ monthly supplier claims, eliminated manual overhead, and cut false positives by 30%.",
     technologies: ["React", "Spring Boot 3", "Python / FastAPI", "YOLO (Computer Vision)", "AWS SageMaker", "PySpark", "AWS Batch", "PostgreSQL", "AWS ECS", "Docker", "SonarQube"],
     featured: true,
+    githubUrl: "https://github.com/laroshan/yolo-production-pipeline",
+    sourceNote: "Enterprise platform is proprietary — the vision microservice reference implementation is open source.",
     demoBadge: "Global Finalist 2026",
     metrics: [
       { label: "Recognition", value: "Global Finalist" },
@@ -140,7 +148,7 @@ export const projects: Project[] = [
       "Kubernetes pod auto-scaling based on real-time request queue metrics.",
       "NLP microservice for automated curriculum content evaluation."
     ],
-    impact: "Maintained sub-100ms response times while serving 1M+ concurrent international learners.",
+    impact: "Maintained sub-100ms response times for a platform serving 1M+ active international learners.",
     technologies: ["Java 17", "Spring Boot", "MongoDB", "Redis", "Kubernetes", "Docker", "AWS", "GitLab CI"],
     featured: true,
     demoBadge: "1M+ Active Users",
@@ -164,7 +172,7 @@ export const projects: Project[] = [
     impact: "Accelerates code review velocity while enforcing clean architecture and strict security standards.",
     technologies: ["Python", "FastAPI", "AST Parsers", "LLM Agents", "GitHub Actions", "Docker"],
     featured: true,
-    githubUrl: "https://github.com/laroshan",
+    sourceNote: "Personal project — source available on request",
     demoBadge: "Developer Tool",
     metrics: [
       { label: "Analysis", value: "AST & LLM" },
@@ -186,11 +194,32 @@ export const projects: Project[] = [
     impact: "Enables rapid prototyping of autonomous agents and multi-agent coordination pipelines.",
     technologies: ["Python", "OpenAI / Anthropic APIs", "FastAPI", "Vector Store", "Prompt Engineering"],
     featured: true,
-    githubUrl: "https://github.com/laroshan",
+    sourceNote: "Personal project — source available on request",
     demoBadge: "Agentic Runtime",
     metrics: [
       { label: "Pattern", value: "ReAct / Agentic" },
       { label: "Tools", value: "Dynamic Invocation" }
+    ]
+  },
+  {
+    id: "strava-mcp",
+    title: "Strava MCP Server",
+    category: "AI & Data",
+    tagline: "Custom Model Context Protocol integration that lets AI assistants read Strava activity data.",
+    description: "A Model Context Protocol (MCP) integration for Strava, built before Strava shipped official MCP support. Exposes recent activities — distance, duration, pace, elevation and heart rate — to MCP-compatible AI clients through a FastAPI service.",
+    architecturalOverview: [
+      "FastAPI service exposing an /activities endpoint consumed by MCP-compatible clients.",
+      "Full OAuth2 authorization-code flow with automatic access-token refresh.",
+      "Normalises raw Strava API payloads into LLM-friendly activity summaries."
+    ],
+    impact: "Gives AI assistants live, structured access to personal training data for coaching and analysis workflows.",
+    technologies: ["Python", "FastAPI", "Model Context Protocol (MCP)", "OAuth2", "Strava API"],
+    featured: false,
+    githubUrl: "https://github.com/laroshan/stravaMCP",
+    demoBadge: "Open Source",
+    metrics: [
+      { label: "Protocol", value: "MCP" },
+      { label: "Auth", value: "OAuth2 + Refresh" }
     ]
   },
   {
@@ -207,7 +236,7 @@ export const projects: Project[] = [
     impact: "Delivers zero-latency revenue analytics for high-volume billing platforms.",
     technologies: ["Apache Kafka", "Java 17", "Spring Boot", "Redis", "WebSockets", "React", "Docker"],
     featured: false,
-    githubUrl: "https://github.com/laroshan",
+    sourceNote: "Personal project — source available on request",
     metrics: [
       { label: "Stream Engine", value: "Apache Kafka" },
       { label: "Updates", value: "Real-Time Push" }
@@ -227,7 +256,7 @@ export const projects: Project[] = [
     impact: "Provides structured language acquisition tools and interactive fluency drills.",
     technologies: ["React 19", "TypeScript", "Tailwind CSS", "Vite", "Firebase Hosting", "Firestore"],
     featured: false,
-    githubUrl: "https://github.com/laroshan",
+    sourceNote: "Personal project — source available on request",
     metrics: [
       { label: "Target Level", value: "Goethe B2" },
       { label: "Modules", value: "Grammar & Vocab" },
@@ -342,7 +371,7 @@ export const educationList: Education[] = [
     details: [
       "Graduated with Second Class Upper Honours (GPA: 3.56 / 4.00, German Grade Equivalent: Gut / 1.8).",
       "Awarded Dean's List for 2 consecutive semesters (2018–2019) for exceptional academic standing (GPA >= 3.80).",
-      "Final Year Project: Led a team of 5 designing a full-stack platform with an AI chatbot (Rasa NLU, Python, React, MongoDB) automating university course allocation for the UGC.",
+      "Final Year Project: Led a team of 5 designing a full-stack platform with an AI chatbot (Rasa NLU, Python, React, MongoDB) automating university course allocation for the UGC (source: github.com/laroshan/Rasa_UGC_chatbot).",
       "Rigorous curriculum in Distributed Systems, Software Architecture, Algorithms, Database Systems, and Cloud Computing."
     ]
   },
@@ -368,7 +397,7 @@ export const languageSkills: LanguageSkill[] = [
   {
     language: "German",
     level: "Goethe-Zertifikat B1",
-    description: "Certified German language proficiency (Goethe-Institut). Eligible for EU Blue Card.",
+    description: "Certified German language proficiency (Goethe-Institut). Actively working towards B2.",
     badge: "Goethe B1"
   },
   {
@@ -412,7 +441,7 @@ export const certificationsAndHonors: CertificationOrHonor[] = [
     title: "Goethe-Zertifikat B1",
     issuer: "Goethe-Institut",
     date: "Certified",
-    description: "Official European Framework (CEFR) B1 German language certificate. Fluent communication in professional German-speaking engineering environments.",
+    description: "Official CEFR B1 German language certificate. Confident everyday and workplace conversation in German; actively working towards B2.",
     badge: "CEFR B1",
     icon: "Globe2"
   }

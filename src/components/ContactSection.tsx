@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { 
   Mail, 
-  Phone, 
+
   MapPin, 
   Linkedin, 
   Github, 
   Check, 
   Copy, 
-  ArrowRight
+  ArrowRight,
+  Download
 } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
+
+const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID as string | undefined;
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +22,7 @@ export const ContactSection: React.FC = () => {
     message: ''
   });
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'mailto' | 'error'>('idle');
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personalInfo.email);
@@ -27,13 +30,38 @@ export const ContactSection: React.FC = () => {
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const openMailClient = () => {
     const mailtoUrl = `mailto:${personalInfo.email}?subject=${encodeURIComponent(formData.subject || 'Engineering Inquiry')}&body=${encodeURIComponent(
-      `From: ${formData.name} (${formData.email})\n\nMessage:\n${formData.message}`
+      `From: ${formData.name} (${formData.email})
+
+Message:
+${formData.message}`
     )}`;
     window.location.href = mailtoUrl;
-    setIsSubmitted(true);
+    setStatus('mailto');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Without a Formspree form configured, fall back to the visitor's mail client.
+    if (!FORMSPREE_ID) {
+      openMailClient();
+      return;
+    }
+
+    setStatus('sending');
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ ...formData, _subject: formData.subject, _replyto: formData.email }),
+      });
+      if (!res.ok) throw new Error(`Formspree responded ${res.status}`);
+      setStatus('sent');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -88,21 +116,6 @@ export const ContactSection: React.FC = () => {
                 </button>
               </div>
 
-              {/* Phone */}
-              <div className="dev-card p-5 flex items-center gap-4 dev-card-hover">
-                <div className="w-10 h-10 rounded-xl bg-[#0f141f] border border-[#232d42] flex items-center justify-center text-accent-blue">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Call or WhatsApp:</div>
-                  <a
-                    href={`tel:${personalInfo.phone.replace(/\s+/g, '')}`}
-                    className="text-sm sm:text-base font-bold text-white hover:text-accent-cyan transition-colors"
-                  >
-                    {personalInfo.phone}
-                  </a>
-                </div>
-              </div>
 
               {/* Location */}
               <div className="dev-card p-5 flex items-center gap-4 dev-card-hover">
@@ -117,10 +130,36 @@ export const ContactSection: React.FC = () => {
                 </div>
               </div>
 
+              {/* What I'm looking for */}
+              <div className="dev-card p-5 space-y-3">
+                <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">What I’m looking for:</div>
+                <div className="flex flex-wrap gap-2">
+                  {personalInfo.lookingFor.roles.map((role) => (
+                    <span key={role} className="text-xs px-2.5 py-1 rounded-md bg-[#162033] border border-accent-blue/40 text-neutral-100 font-semibold">
+                      {role}
+                    </span>
+                  ))}
+                </div>
+                <div className="text-xs text-neutral-300">
+                  <strong className="text-white">Locations:</strong> {personalInfo.lookingFor.locations.join(' • ')}
+                </div>
+                <div className="text-xs text-neutral-400">
+                  {personalInfo.lookingFor.workAuthorization}
+                </div>
+              </div>
+
             </div>
 
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
+              <a
+                href={personalInfo.cvUrl}
+                download="Laroshan_Surendran_CV.pdf"
+                className="h-12 px-5 rounded-xl dev-card flex items-center gap-2 text-sm font-bold text-neutral-200 hover:text-accent-cyan hover:border-accent-cyan transition-all"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download CV</span>
+              </a>
               <a
                 href={personalInfo.linkedin}
                 target="_blank"
@@ -215,16 +254,31 @@ export const ContactSection: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-4 px-6 rounded-full bg-accent-blue hover:bg-blue-600 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-accent-blue/25 hover:shadow-accent-blue/40 transition-all duration-200 cursor-pointer group"
+                  disabled={status === 'sending'}
+                  className="w-full py-4 px-6 rounded-full bg-accent-blue hover:bg-blue-600 disabled:opacity-60 disabled:cursor-wait text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-accent-blue/25 hover:shadow-accent-blue/40 transition-all duration-200 cursor-pointer group"
                 >
-                  <span>Contact me</span>
+                  <span>{status === 'sending' ? 'Sending…' : 'Send message'}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                {isSubmitted && (
-                  <div className="p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-xs text-emerald-300 flex items-center gap-2">
+                {status === 'sent' && (
+                  <div role="status" className="p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-xs text-emerald-300 flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-400" />
-                    <span>Email client opened successfully. Thank you for reaching out!</span>
+                    <span>Thanks — your message was sent. I usually reply within 1–2 business days.</span>
+                  </div>
+                )}
+
+                {status === 'mailto' && (
+                  <div role="status" className="p-4 rounded-xl bg-[#0f141f] border border-[#232d42] text-xs text-neutral-300">
+                    Your email app should have opened with the message. If nothing happened, email me directly at{' '}
+                    <a href={`mailto:${personalInfo.email}`} className="text-accent-cyan font-bold">{personalInfo.email}</a>.
+                  </div>
+                )}
+
+                {status === 'error' && (
+                  <div role="alert" className="p-4 rounded-xl bg-red-950/70 border border-red-500/40 text-xs text-red-300">
+                    Sorry, the message couldn’t be sent. Please email me directly at{' '}
+                    <a href={`mailto:${personalInfo.email}`} className="font-bold underline">{personalInfo.email}</a>.
                   </div>
                 )}
               </form>

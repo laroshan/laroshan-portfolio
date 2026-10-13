@@ -140,3 +140,59 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #146ef5;
 }
+
+/* Print: when the resume modal is open, print only the CV as a clean light A4 document */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html, body, #root, #root > div {
+    background: #fff !important;
+    min-height: 0 !important;
+  }
+  body:has(#resume-modal) #root > div > *:not(#resume-modal) {
+    display: none !important;
+  }
+  #resume-modal {
+    position: static !important;
+    padding: 0 !important;
+    background: none !important;
+    backdrop-filter: none !important;
+    display: block !important;
+  }
+  #resume-modal > div {
+    max-height: none !important;
+    max-width: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    overflow: visible !important;
+  }
+  #resume-modal .no-print,
+  #resume-modal > div[aria-hidden] {
+    display: none !important;
+  }
+  #resume-print {
+    overflow: visible !important;
+    padding: 12mm 14mm !important;
+    background: #fff !important;
+    color: #1f2937 !important;
+  }
+  #resume-print * {
+    color: #1f2937 !important;
+    border-color: #d1d5db !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  #resume-print h1,
+  #resume-print strong,
+  #resume-print h2 {
+    color: #0f172a !important;
+  }
+  #resume-print li,
+  #resume-print .border-l-2 {
+    break-inside: avoid;
+  }
+}

@@ -57,7 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-3 bg-[#131926]/70 px-4 py-1.5 rounded-full border border-[#232d42]">
+          <nav className="hidden xl:flex items-center gap-1 lg:gap-3 bg-[#131926]/70 px-4 py-1.5 rounded-full border border-[#232d42]">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -70,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
           </nav>
 
           {/* Right Side Actions */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             <button
               onClick={onOpenResumeModal}
               className="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-full bg-[#131926] hover:bg-[#1a2233] text-neutral-200 hover:text-white border border-[#232d42] hover:border-neutral-600 transition-all shadow-sm"
@@ -89,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
           </div>
 
           {/* Mobile menu hamburger */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex xl:hidden items-center gap-2">
             <button
               onClick={onOpenResumeModal}
               className="px-3 py-1.5 text-xs font-bold rounded-full bg-[#131926] text-white border border-[#232d42]"
@@ -110,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0f141f] border-b border-[#232d42] px-5 pt-4 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top duration-200">
+        <div className="xl:hidden bg-[#0f141f] border-b border-[#232d42] px-5 pt-4 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top duration-200">
           {navLinks.map((link) => (
             <a
               key={link.name}
@@ -122,6 +122,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
             </a>
           ))}
           <div className="pt-3 border-t border-[#232d42] flex flex-col gap-2">
+            <a
+              href="/cv.pdf"
+              download="Laroshan_Surendran_CV.pdf"
+              className="w-full text-center py-3 px-4 text-xs font-bold rounded-full bg-[#131926] text-white border border-[#232d42]"
+            >
+              Download CV (PDF)
+            </a>
             <a
               href="#contact"
               onClick={() => setMobileMenuOpen(false)}

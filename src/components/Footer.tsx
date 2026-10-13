@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, ArrowRight, Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { ArrowUp, ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 
 export const Footer: React.FC = () => {
@@ -57,13 +57,6 @@ export const Footer: React.FC = () => {
               >
                 <Mail className="w-4 h-4" />
               </a>
-              <a
-                href={`tel:${personalInfo.phone.replace(/\s+/g, '')}`}
-                className="w-10 h-10 rounded-xl dev-card flex items-center justify-center text-neutral-300 hover:text-emerald-400 hover:border-emerald-400 transition-all"
-                aria-label="Phone"
-              >
-                <Phone className="w-4 h-4" />
-              </a>
             </div>
           </div>
 
@@ -89,12 +82,13 @@ export const Footer: React.FC = () => {
               </div>
 
               <div>
-                <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Call me:</div>
+                <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Resume:</div>
                 <a
-                  href={`tel:${personalInfo.phone.replace(/\s+/g, '')}`}
+                  href={personalInfo.cvUrl}
+                  download="Laroshan_Surendran_CV.pdf"
                   className="text-base font-bold text-white hover:text-accent-cyan transition-colors mt-1 block"
                 >
-                  {personalInfo.phone}
+                  Download CV (PDF)
                 </a>
               </div>
             </div>
